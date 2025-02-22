@@ -16,6 +16,14 @@ server.get('/', async (request, reply) => {
 
 server.register(noteRoutes, { prefix: '/note' });
 
+const address = '0.0.0.0';
 server.listen({
     port: port,
+    host: address
+}, (err, address) => {
+    if (err) {
+        console.error(err);
+        process.exit(1);
+    }
+    console.log(`Server listening at ${address}`);
 });
