@@ -21,7 +21,7 @@ export class DatabasePostgres {
     async update(id, item){
         await sql`
             UPDATE items
-            SET title = ${item.title}, description = ${item.description}, finished = ${item.isDone}
+            SET title = ${item.title}, description = ${item.description}
             WHERE id = ${id}`;
     }
 
