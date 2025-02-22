@@ -8,6 +8,7 @@ export const server = fastify();
 
 // const database = new DatabaseMemory();
 const database = new DatabasePostgres();
+const port = process.env.PORT || 3333
 
 server.get('/', async (request, reply) => {
     return { hello: 'NAO ERA PROCE ESTAR AQUI KKKKKKKKKKKKKKK' };
@@ -16,5 +17,5 @@ server.get('/', async (request, reply) => {
 server.register(noteRoutes, { prefix: '/note' });
 
 server.listen({
-    port: 3333,
+    port: port,
 });
