@@ -1,12 +1,12 @@
 import { randomUUID } from 'node:crypto';
-import { sql } from './db.js';
+import { sql } from '../../dbConfig/db.js';
 
 export class DatabasePostgres {
     #items = new Map();
 
-    async list() {
+    async list(userId) {
         const items = await sql`
-            SELECT * FROM items;
+            SELECT * FROM items_table WHERE user_id = ${userId};
         `;
 
         return items;
@@ -14,27 +14,27 @@ export class DatabasePostgres {
     
     async create(item){   
         await sql`
-            INSERT INTO items (title, description, finished)
-            VALUES (${item.title}, ${item.description}, false)`;
+            INSERT INTO items_table (title, description, finished, user_id)
+            VALUES (${item.title}, ${item.description}, false, ${item.userId})`;
     }
 
     async update(id, item){
         await sql`
-            UPDATE items
+            UPDATE items_table
             SET title = ${item.title}, description = ${item.description}
             WHERE id = ${id}`;
     }
 
     async updateStatus(id){
         await sql`
-            UPDATE items
+            UPDATE items_table
             SET finished = true
             WHERE id = ${id}`;
     }
 
     async delete(id){
         await sql`
-            DELETE FROM items
+            DELETE FROM items_table
             WHERE id = ${id}`;
     }
 }

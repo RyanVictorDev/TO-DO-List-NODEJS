@@ -1,8 +1,9 @@
 import { fastify } from 'fastify';
-import { DatabaseMemory } from './repository/database-memory.js';
-import { DatabasePostgres } from './repository/database-postgres.js';
-import { NoteModel } from './model/noteModel.js';
-import { noteRoutes } from './controller/noteController.js';
+import { DatabaseMemory } from './dbConfig/database-memory.js';
+import { DatabasePostgres } from './notes/repository/database-postgres.js';
+import { NoteModel } from './notes/model/noteModel.js';
+import { noteRoutes } from './notes/controller/noteController.js';
+import { userRoutes } from './users/controller/userController.js';
 import cors from '@fastify/cors'
 
 export const server = fastify();
@@ -20,6 +21,7 @@ server.get('/', async (request, reply) => {
 });
 
 server.register(noteRoutes, { prefix: '/note' });
+server.register(userRoutes, { prefix: '/user' });
 
 const address = '0.0.0.0';
 server.listen({

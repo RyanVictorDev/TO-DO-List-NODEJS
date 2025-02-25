@@ -10,8 +10,8 @@ export function noteRoutes(server, options, done) {
         return reply.status(201).send(request.body);
     });
 
-    server.get('/', async () => {
-        const items = database.list();
+    server.get('/user/:id', async (request) => {
+        const items = database.list(request.params.id);
         return items;
     });
 
